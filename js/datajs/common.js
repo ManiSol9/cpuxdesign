@@ -39,10 +39,28 @@ $(document).ready(function () {
     }
 
     mani = () => {
+
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://dhlcp-b2b-externaluserappservice.azurewebsites.net/api/getToken",
+            "method": "GET",
+            "processData": false,
+        }
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+        });        
+
+        /*
         let headers = {
             "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJub25jZSI6IkFRQUJBQUFBQUFEQ29NcGpKWHJ4VHE5Vkc5dGUtN0ZYQndEd3pvcFk2cmstUEpzeDlsTXJ6UHJJVnducURBeS1aXzVmdnV4ZUxhUGZwdjB0djFkUE1EdksxRWtLbDhtN2VFVmZEVV9QTjhLbkgzVGxBdkRka3lBQSIsImFsZyI6IlJTMjU2IiwieDV0IjoiQ3RmUUM4TGUtOE5zQzdvQzJ6UWtacGNyZk9jIiwia2lkIjoiQ3RmUUM4TGUtOE5zQzdvQzJ6UWtacGNyZk9jIn0.eyJhdWQiOiJodHRwczovL2dyYXBoLm1pY3Jvc29mdC5jb20iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9jZDk5ZmVmOC0xY2QzLTRhMmEtOWJkZi0xNTUzMTE4MWQ2NWUvIiwiaWF0IjoxNTYyMDcyMDkxLCJuYmYiOjE1NjIwNzIwOTEsImV4cCI6MTU2MjA3NTk5MSwiYWlvIjoiNDJaZ1lLaFkrRlQ5bmM2MDBsaTNHNHJOYkYyMUFBPT0iLCJhcHBfZGlzcGxheW5hbWUiOiJESExJT1RDb21tb25BcHAiLCJhcHBpZCI6ImRlMjE1ODhmLTBkYzAtNDEzMy04NTMwLTIyNDQzY2E1ZWFkZCIsImFwcGlkYWNyIjoiMSIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0L2NkOTlmZWY4LTFjZDMtNGEyYS05YmRmLTE1NTMxMTgxZDY1ZS8iLCJvaWQiOiJkOWQwMzcxYy1lN2NlLTRhM2EtYjQ3YS1iN2VjNmNmNmY2OGEiLCJyb2xlcyI6WyJVc2VyLlJlYWRXcml0ZS5BbGwiLCJEaXJlY3RvcnkuUmVhZFdyaXRlLkFsbCIsIlVzZXIuSW52aXRlLkFsbCIsIlVzZXIuUmVhZC5BbGwiXSwic3ViIjoiZDlkMDM3MWMtZTdjZS00YTNhLWI0N2EtYjdlYzZjZjZmNjhhIiwidGlkIjoiY2Q5OWZlZjgtMWNkMy00YTJhLTliZGYtMTU1MzExODFkNjVlIiwidXRpIjoiczZLTi1ZcDBCMGF2LWptMmJJNWFBQSIsInZlciI6IjEuMCIsInhtc190Y2R0IjoxNDA5OTA4MTc0fQ.fG0TOdQ-r2PSlIT_ReWjjiFjkwvCG-h4l3hKwHyXtTWexKFybDOfqE6wnc4WuCNWEBtMfRqL4SZdu2gRkesk0ALcXJVppzY8Pol2zSvNi3Co0E9wqU7kclZ55waT0h4YymEs15Z2B00C_BaXoHHzp-3_Mphvwfz_vfZuSJDYhE-hv1U9FuC7DA1L686Nj8V8gPDqhGr1kz5DZQbhKqT21-Xv1-ALDOEWLN4sbgc6UyHDdta3p1djQvfAr6uDzV7_XqIiLfw9b-3gSQs4vV75h5kGxrrJP9CeUN9hHc8TbuVn3jE0PaScUFA-glfBzSrUNJbdX8N7wT3sdCYKVl82TA",
             "Content-Type": "application/json"
         }
+
+        */
+
+        /*
 
         let value = document.getElementById("owner").value;
 
@@ -73,6 +91,8 @@ $(document).ready(function () {
             alert("Not a valid email address")
 
         }
+
+        */
     }
 
     function generateTable() {

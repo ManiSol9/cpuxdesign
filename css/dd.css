@@ -1188,3 +1188,7 @@ input.form-control, select.form-control {
 ol li ol li ol li .dd-handle {
   background: #4bff0096 !important;
 }
+
+a.profile-pic.dropdown-toggle.active {
+  cursor: pointer;
+}
