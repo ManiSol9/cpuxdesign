@@ -40,6 +40,11 @@ $(document).ready(function () {
 
     mani = () => {
 
+        let value = document.getElementById("owner").value;
+
+        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (value.match(mailformat)) {
+
         var settings = {
             "async": true,
             "crossDomain": true,
@@ -55,16 +60,10 @@ $(document).ready(function () {
             if(data.access_token) {
 
                 let headers = {
-                    "Authorization": "Bearer "+ access_token,
+                    "Authorization": "Bearer "+ data.access_token,
                     "Content-Type": "application/json"
                 }
 
-
-                let value = document.getElementById("owner").value;
-
-                var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-                if (value.match(mailformat)) {
-        
                     var queryParam = "?$filter=startswith(mail, '" + value + "')"
         
                     var settings = {
@@ -84,18 +83,14 @@ $(document).ready(function () {
                         }
                     });
                 }
-                else {
+        }); 
         
-                    alert("Not a valid email address")
+        } else {
         
-                }
+            alert("Not a valid email address")
+            document.getElementById("owner").value = null
 
-            } 
-
-        });        
-
-
-
+        }
     }
 
     function generateTable() {

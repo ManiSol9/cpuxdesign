@@ -183,11 +183,10 @@
 
                                 <div class="input-group">
                                     <input type="text" id="email" class="form-control" placeholder="Please enter email"
-                                        aria-describedby="basic-addon1">
+                                        aria-describedby="basic-addon1" onblur="mani()">
                                     <button style="float: right;margin-top: 10px;display: none;background: #31eb31"
                                         class="btn" onclick="invite()" id="invite">Invite</button>
-                                    <button style="float: right;margin-top: 10px;" class="btn" onclick="mani()"
-                                        id="search">Search</button>
+
                                 </div>
 
                                 <div class="input-group">
@@ -209,7 +208,7 @@
                                 <div class="input-group">
                                     <select name="role" id="role" class="form-control">
                                         <option value="">Please select user role</option>
-                                        <option value="Co. Admin">Co. Admin</option>
+                                        <option value="Co. Admin">Co Admin</option>
                                         <option value="Owner">Owner</option>
                                         <option value="Solution Lead">Solution Lead</option>
                                         <option value="Managment">Managment</option>
