@@ -31,6 +31,69 @@ $(document).ready(function () {
             console.log(response, "bus");
             business_units = response.result
 
+            console.log(business_units)
+
+            for(i=0;i<business_units.length;i++){
+
+                
+
+                apps = business_units[i].children
+
+                for(j=0;j<apps.length;j++){
+
+                    childApps = apps[j].children
+
+                    console.log(childApps)
+
+                    let data = []
+
+                    let data1 = {
+                        "id": 67,
+                        "node": "Device Group",
+                        "node_orig_id": 22,
+                        "node_path": "63.65.67",
+                        "node_type": "Device",
+                        "parent_id": 65,
+                        "parent_node": "Device",
+                        "children": []
+                    }
+
+                    let data2 = {
+                        "id": 67,
+                        "node": "User Group",
+                        "node_orig_id": 22,
+                        "node_path": "63.65.67",
+                        "node_type": "User",
+                        "parent_id": 65,
+                        "parent_node": "User Group",
+                        "children": []
+                    }
+
+                    for(k=0;k<childApps.length;k++){
+
+                        if(childApps[k].node_type == "Device"){
+
+                            data1.children.push(childApps[k])
+
+                        } else {
+
+                            data2.children.push(childApps[k])
+
+                        }
+
+                    }
+
+                    data.push(data1)
+
+                    data.push(data2)
+
+                    apps[j].children = data
+                }
+
+            }
+
+            console.log(business_units)
+
             makeList('result', business_units);
 
         });

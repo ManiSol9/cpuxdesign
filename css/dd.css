@@ -1192,3 +1192,8 @@ ol li ol li ol li .dd-handle {
 a.profile-pic.dropdown-toggle.active {
   cursor: pointer;
 }
+
+
+ol li ol li ol li ol li .dd-handle {
+  background: #f0f0ea !important;
+}
