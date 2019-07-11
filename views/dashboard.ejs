@@ -1,0 +1,172 @@
+<%- include('header'); -%>
+
+<body class="fix-header">
+    <div id="wrapper">
+
+        <%- include('menu'); -%>
+
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Dashboard</h4>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /.row -->
+                <!-- ============================================================== -->
+                <!-- Different data widgets -->
+                <!-- ============================================================== -->
+                <!-- .row -->
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">BU Onboarding</h3>
+                            <ul class="list-inline two-part">
+                                <li>
+                                    <div class="icon-tile">
+                                        <i class="fa fa-group"></i>
+                                    </div>
+                                </li>
+                                <li class="text-right"><i class="ti-arrow-up text-success"></i> <span
+                                        class="counter text-success" id="text1">0</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">Application Onboarding</h3>
+                            <ul class="list-inline two-part">
+                                <li>
+                                    <div class="icon-tile">
+                                        <i class="fa fa-desktop"></i>
+                                    </div>
+                                </li>
+                                <li class="text-right"><i class="ti-arrow-up text-purple"></i> <span
+                                        class="counter text-purple" id="text2">0</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">User Onboarding</h3>
+                            <ul class="list-inline two-part">
+                                <li>
+                                    <div class="icon-tile">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                </li>
+                                <li class="text-right"><i class="ti-arrow-up text-info"></i> <span
+                                        class="counter text-info" id="text3">0</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">Device Onboarding</h3>
+                            <ul class="list-inline two-part">
+                                <li>
+                                    <div class="icon-tile">
+                                        <i class="fa fa-print"></i>
+                                    </div>
+                                </li>
+                                <li class="text-right"><i class="ti-arrow-up text-info"></i> <span
+                                        class="counter text-info" style="color: #f98d41;" id="text4">0</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- chat-listing & recent comments -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <!-- .col -->
+                    <div class="col-md-12 col-lg-8 col-sm-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">BU Onboarding from last 7 days</h3>
+                            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="white-box analytics-info">
+
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+            <footer class="footer text-center"> 2019 &copy; DPDHL iot.dhl.com </footer>
+        </div>
+    </div>
+
+</body>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+<script>
+window.onload = function () {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	axisX:{
+        valueFormatString: "DD MMM",
+        title: "Days",
+	},
+	axisY: {
+		title: "Number of Visitors",
+		includeZero: false
+	},
+	data: [{
+		type: "line",
+		xValueFormatString: "DD MMM",
+		color: "#F08080",
+		dataPoints: [
+			{ x: new Date(2019, 10, 7), y: 610 },
+			{ x: new Date(2019, 10, 6), y: 680 },
+			{ x: new Date(2019, 10, 5), y: 690 },
+			{ x: new Date(2019, 10, 4), y: 700 },
+			{ x: new Date(2019, 10, 3), y: 710 },
+			{ x: new Date(2019, 10, 2), y: 658 }
+		]
+	}]
+});
+chart.render();
+
+requestCount();
+  
+  function requestCount(){
+      var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": "https://dive11.azurewebsites.net/api/beta/dashboard/getCounts",
+          "method": "GET",
+          "headers": {
+            "x-api-key": "q4jdp6swt4015amrj0681s0xs5r4opotc4f5sfv3",
+          }
+        }
+        
+        $.ajax(settings).done(function (response) {
+          console.log(response);
+          
+          if(response.status == 200){
+
+            data = response.result
+
+            document.getElementById("text1").innerHTML = data.buCount
+            document.getElementById("text2").innerHTML = data.appCount
+            document.getElementById("text3").innerHTML = data.usersCount
+            document.getElementById("text4").innerHTML = data.devicesCount
+
+
+          }
+          
+        });
+  }
+
+}
+</script>
+
+<%- include('footer'); -%>
+
+</html>
