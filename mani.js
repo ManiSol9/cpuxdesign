@@ -182,13 +182,14 @@ app.get('/facilities', ensureAuthenticated, function(req, res) {
   res.render('facilities', { user: req.user });
 });
 
-app.get('/logs', ensureAuthenticated, function(req, res) {
+app.get('/logs', function(req, res) {
   res.render('logs', { user: req.user });
 });
 
 app.get('/profile', ensureAuthenticated,  function(req, res) {
   res.render('profile', { user: req.user });
 });
+
 
 app.get('/reports', ensureAuthenticated, function(req, res) {
   res.render('reports', { user: req.user });
@@ -211,10 +212,10 @@ app.get('/shipments', ensureAuthenticated, function(req, res) {
 });
 
 app.get('/others', ensureAuthenticated, function(req, res) {
-  res.render('shipments', { user: req.user });
+  res.render('others', { user: req.user }); 
 });
 
-
+ 
 
 
 app.get('/login',
