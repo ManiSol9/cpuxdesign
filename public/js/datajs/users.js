@@ -29,7 +29,7 @@ $(document).ready(function () {
         }
     }
 
-    
+
     fetchUsers()
 
     function fetchUsers() {
@@ -122,7 +122,7 @@ $(document).ready(function () {
         myObj = groups;
         txt += "<table class='table'><tr><th> Group ID </th><th> Group Name </th> <th> Created By </th> <th> Created Time </th> <th> View Users </th> <th>Actions</th></tr>"
         for (x in myObj) {
-          txt += "<tr><td>" + myObj[x].id + "</td><td>" + myObj[x].user_group_name + "</td><td>" + myObj[x].created_by + "</td><td>" + myObj[x].created_date + "</td><td> <button class='btn btn-success' onclick='viewDevices("+ myObj[x].id +")'> View </button></td>";
+          txt += "<tr><td>" + myObj[x].id + "</td><td>" + myObj[x].user_group_name + "</td><td>" + myObj[x].created_by + "</td><td>" + myObj[x].created_date + "</td><td> <button class='btn btn-success' onclick='viewUsers("+ myObj[x].id +")'> View </button></td>";
           txt += "<td><button class='btn btn-danger'><span onclick='deletegroup("+myObj[x].id+")' class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td></tr>";
         }
         txt += "</table>"    
@@ -149,14 +149,14 @@ $(document).ready(function () {
 
             if(response.status == 200){
                 alert("Deleted Successfully");
-                getDevicesGroups();
+                fetchGroups();
                 //$("#entity").modal('hide');	
             }
         });
 
     }    
 
-    viewDevices = (id) => {
+    viewUsers = (id) => {
 
         var settings = {
             "async": true,
@@ -174,9 +174,9 @@ $(document).ready(function () {
         $.ajax(settings).done(function (response) {
             console.log(response, "device");
     
-            devices = response.result
-    
-            associateddevices = devices
+            users = response.result
+
+            associatedusers = users
     
             generateTable();
     
@@ -258,11 +258,11 @@ $(document).ready(function () {
         txt +='<div class"backButton"> <button onclick="viewGroups();" class="btn btn-danger"> Go Back </button> </div><br><br>';
 
         myObj = associatedusers;
-        txt += "<table class='table'><tr><th> Username </th><th> Role </th><th> Mail </th><th> Phone number </th><th>Actions</th></tr>"
+        txt += "<table class='table'><tr><th> Nmae </th><th> EMail </th><th>Actions</th></tr>"
         for (x in myObj) {
-            txt += "<tr><td>" + myObj[x].name + "</td><td>" + myObj[x].designation + "</td><td>" + myObj[x].email_id + "</td>";
-            txt += "<td>" + myObj[x].contact_number + "</td><td><span onclick='showbu()' class='glyphicon glyphicon-info-sign' aria-hidden='true'></span>&nbsp;&nbsp;";
-            txt += "<span onclick='deletebu(" + myObj[x].id + ")' class='glyphicon glyphicon-trash' aria-hidden='true'></span></td></tr>";
+            txt += "<tr><td>" + myObj[x].firstname + "</td><td>" + myObj[x].email + "</td>";
+            txt += "<td>";
+            txt += "<button class='btn btn-danger'><span onclick='deletebu(" + myObj[x].user_id + ", "+  myObj[x].user_group_id +")' class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td></tr>";
         }
         txt += "</table>"
         document.getElementById("demo").innerHTML = txt;
@@ -302,12 +302,17 @@ $(document).ready(function () {
     }
 
 
-    deletebu = (x) => {
+    deletebu = (x, y) => {
+
+        let Obj = {
+            userID: x,
+            userGroupID: y
+        }
 
         var settings = {
             "async": true,
             "crossDomain": true,
-            "url": "https://dive11.azurewebsites.net/api/beta/users/deleteUser?id=" + x,
+            "url": "https://dive11.azurewebsites.net/api/beta/users/deleteUserFromUserGroup",
             "method": "DELETE",
             "headers": {
                 "content-type": "application/json",
@@ -315,6 +320,7 @@ $(document).ready(function () {
                 "postman-token": "0146efcb-e86f-0ff0-d4ea-d8647cbbfd33"
             },
             "processData": false,
+            "data": JSON.stringify(Obj)
         }
 
         $.ajax(settings).done(function (response) {

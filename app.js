@@ -136,8 +136,6 @@ app.get('/', ensureAuthenticated, function(req, res) {
 
   if(req.user == undefined){
     res.render('index');
-
-    console.log("mani")
   } else {
     res.render('dashboard', { user: req.user });
   }

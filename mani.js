@@ -139,13 +139,16 @@ app.get('/', function(req, res) {
 
     console.log("mani")
   } else {
+
+    console.log(req.user)
+
     res.render('dashboard', { user: req.user });
   }
 
 });
 
 // '/account' is only available to logged in user
-app.get('/account', function(req, res) {
+app.get('/account', ensureAuthenticated, function(req, res) {
   res.render('account', { user: req.user });
 });
 
@@ -158,50 +161,59 @@ app.get('/account', ensureAuthenticated, function(req, res) {
 
 */
 
-app.get('/application', function(req, res) {
+app.get('/application', ensureAuthenticated, function(req, res) {
   res.render('app', { user: req.user });
 });
 
-app.get('/assets',  function(req, res) {
+app.get('/assets', ensureAuthenticated,  function(req, res) {
   res.render('assets', { user: req.user });
 });
 
 
-app.get('/businessunits', function(req, res) {
+app.get('/businessunits', ensureAuthenticated, function(req, res) {
   res.render('bu', { user: req.user });
 });
 
-app.get('/devices', function(req, res) {    
+app.get('/devices', ensureAuthenticated, function(req, res) {    
   res.render('devices', { user: req.user });
 });
 
-app.get('/facilities', function(req, res) {
+app.get('/facilities', ensureAuthenticated, function(req, res) {
   res.render('facilities', { user: req.user });
 });
 
-app.get('/logs', function(req, res) {
+app.get('/logs', ensureAuthenticated, function(req, res) {
   res.render('logs', { user: req.user });
 });
 
-app.get('/profile',  function(req, res) {
+app.get('/profile', ensureAuthenticated,  function(req, res) {
   res.render('profile', { user: req.user });
 });
 
-app.get('/reports', function(req, res) {
+app.get('/reports', ensureAuthenticated, function(req, res) {
   res.render('reports', { user: req.user });
 });
 
-app.get('/users', function(req, res) {
+app.get('/users', ensureAuthenticated, function(req, res) {
   res.render('users', { user: req.user });
 });
 
-app.get('/dashboard', function(req, res) {
+app.get('/dashboard', ensureAuthenticated, function(req, res) {
   res.render('dashboard', { user: req.user });
 });
 
-app.get('/association', function(req, res) {
+app.get('/association', ensureAuthenticated, function(req, res) {
   res.render('association', { user: req.user });
 });
+
+app.get('/shipments', ensureAuthenticated, function(req, res) {
+  res.render('shipments', { user: req.user });
+});
+
+app.get('/others', ensureAuthenticated, function(req, res) {
+  res.render('shipments', { user: req.user });
+});
+
 
 
 
@@ -212,7 +224,7 @@ app.get('/login',
         response: res,                      // required
         resourceURL: config.resourceURL,    // optional. Provide a value if you want to specify the resource.
         customState: 'my_state',            // optional. Provide a value if you want to provide custom state value.
-        failureRedirect: '/qwertt' 
+        failureRedirect: '/' 
       }
     )(req, res, next);
   },

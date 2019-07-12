@@ -15,7 +15,7 @@ $(document).ready(function () {
       "url": "https://api.applicationinsights.io/v1/apps/6044a517-fd38-48ff-b9fd-bf8aaa93ca97/events/$all",
       "method": "GET",
       "headers": {
-        "x-api-key": "0ycdxaqskokv6iqulifzywiszhmvbrre4phjamv6",
+        "x-api-key": "q4jdp6swt4015amrj0681s0xs5r4opotc4f5sfv3",
       }
     }
 
@@ -554,7 +554,7 @@ $(document).ready(function () {
   
     console.log(events, 'sdfsdfsdf')
   
-    txt += "<table class='table'><tr><th> Session ID </th><th> Timestamp </th><th> Accessed Page </th><th> Operation </th> <th> Browser </th> <th> IP </th> <th>City</th> <th> More</th></tr>"
+    txt += "<table class='table'><tr><th> Timestamp </th><th> Accessed Page </th><th> Operation </th> <th> Message </th> <th> Browser </th> <th> IP </th> <th>City</th> <th> More</th></tr>"
   
   
     for (x in data) {
@@ -566,8 +566,8 @@ $(document).ready(function () {
   
   
   
-      txt += "<tr><td>" + session.id + "</td><td>" + data[x].timestamp + "</td><td>" + customDimensions.refUri + "</td>";
-      txt += "<td>" + operation.name + "</td><td>" + client.browser + "</td><td>" + client.ip + "</td><td>" + client.city + "</td><td> <button onclick='mani(" + data[x] + ")' class='btn btn-success'> View </button></td></tr>";
+      txt += "<tr><td>" + data[x].timestamp + "</td><td>" + customDimensions.refUri + "</td>";
+      txt += "<td>" + operation.name + "</td><td> Meesgae </td><td>" + client.browser + "</td><td>" + client.ip + "</td><td>" + client.city + "</td></tr>";
   
     }
     txt += "</table>"

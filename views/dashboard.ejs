@@ -1,5 +1,70 @@
 <%- include('header'); -%>
 
+<style>
+    .loading {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        height: 250px;
+        justify-content: center;
+    }
+
+    .loading i {
+        font-size: 40px;
+        color: #ffcc00;
+    }
+
+    .title {
+        font-size: 16px;
+        border-bottom: 1px solid #eee;
+        height: 40px;
+        position: relative;
+        padding-top: 10px;
+    }
+
+    .content {
+        margin: 15px 0;
+        min-height: 50px;
+        clear: both;
+    }
+
+    .user-icon {
+        position: relative;
+        margin-right: 20px;
+        margin-top: 3px;
+        float: left;
+        font-size: 45px;
+        color: #fecb07;
+    }
+
+    .user-details {
+        width: calc(100% - 50px);
+        padding-top: 10px;
+        float: left;
+    }
+
+    .user-details-name {
+        font-size: 16px;
+        color: #d40511;
+    }
+
+    .user-details-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .user-action {
+        float: right;
+        width: 70px;
+        padding-top: 10px;
+    }
+
+    .user-action-icon {
+        padding-left: 20px;
+    }
+</style>
+
 <body class="fix-header">
     <div id="wrapper">
 
@@ -29,7 +94,8 @@
                                     </div>
                                 </li>
                                 <li class="text-right"><i class="ti-arrow-up text-success"></i> <span
-                                        class="counter text-success" id="text1">0</span></li>
+                                        class="counter text-success" id="text1"><i class="fa fa-spin fa-cog"></i></span>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -43,7 +109,8 @@
                                     </div>
                                 </li>
                                 <li class="text-right"><i class="ti-arrow-up text-purple"></i> <span
-                                        class="counter text-purple" id="text2">0</span></li>
+                                        class="counter text-purple" id="text2"><i class="fa fa-spin fa-cog"></i></span>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -56,8 +123,11 @@
                                         <i class="fa fa-user"></i>
                                     </div>
                                 </li>
-                                <li class="text-right"><i class="ti-arrow-up text-info"></i> <span
-                                        class="counter text-info" id="text3">0</span></li>
+                                <li class="text-right"><i class="ti-arrow-up text-info"></i>
+                                    <span class="counter text-info" id="text3">
+                                        <i class="fa fa-spin fa-cog"></i>
+                                    </span>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -71,8 +141,11 @@
                                         <i class="fa fa-print"></i>
                                     </div>
                                 </li>
-                                <li class="text-right"><i class="ti-arrow-up text-info"></i> <span
-                                        class="counter text-info" style="color: #f98d41;" id="text4">0</span></li>
+                                <li class="text-right"><i class="ti-arrow-up text-info"></i>
+                                    <span class="counter text-info" style="color: #f98d41;" id="text4">
+                                        <i class="fa fa-spin fa-cog"></i>
+                                    </span>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -84,12 +157,75 @@
                     <!-- .col -->
                     <div class="col-md-12 col-lg-8 col-sm-12">
                         <div class="white-box analytics-info">
-                            <h3 class="box-title">BU Onboarding from last 7 days</h3>
-                            <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                            <div class="select_right" style="    display: flex;
+                            padding: 10px;">
+                                <h3 class="box-title" style="width: 300px;
+                                float: left;">Onboarding data from last 7 days</h3>
+                                <select id="changegraph" style="    float: right;
+                                margin-bottom: 5px;
+                                margin-left: 36%;">
+                                    <option value="A"> Business Units </option>
+                                    <option value="B"> Applications </option>
+                                </select>
+                            </div>
+
+                            <div id="chartContainer" style="height: 300px; width: 100%;">
+
+                                <div class="loading">
+                                    <i class="fa fa-spin fa-cog"></i>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="white-box analytics-info">
+                            <div class="application-owner">
+                                <div class="title box-title">
+                                      Alerts
+                                    <span style="float:right"><i class="fa fa-bell-o"></i></span>
+                                </div>
+                                <div class="content">
+                                    <div class="user-icon">
+                                    </div>
+                                    <div class="user-details">
+                                        <div class="user-details-name">BU Alert</div>
+                                        <div class="user-details-text">
+                                            Application created in CSI Track and Trace
+                                        </div>
+                                    </div>
+                                    <div class="user-action">
+                                        <div class="user-action-icon"></div>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <div class="user-icon">
+                                    </div>
+                                    <div class="user-details">
+                                        <div class="user-details-name">Application Alert</div>
+                                        <div class="user-details-text">
+                                            Application created in GBS Smart Energy Reporting
+                                        </div>
+                                    </div>
+                                    <div class="user-action">
+                                        <div class="user-action-icon"></div>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <div class="user-icon">
+
+                                    </div>
+                                    <div class="user-details">
+                                        <div class="user-details-name">Application Alert</div>
+                                        <div class="user-details-text">
+                                            Application created in PnP Customer Satisfaction
+                                        </div>
+                                    </div>
+                                    <div class="user-action">
+                                        <div class="user-action-icon"></div>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
@@ -105,66 +241,194 @@
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 <script>
-window.onload = function () {
+    window.onload = function () {
 
-var chart = new CanvasJS.Chart("chartContainer", {
-	animationEnabled: true,
-	axisX:{
-        valueFormatString: "DD MMM",
-        title: "Days",
-	},
-	axisY: {
-		title: "Number of Visitors",
-		includeZero: false
-	},
-	data: [{
-		type: "line",
-		xValueFormatString: "DD MMM",
-		color: "#F08080",
-		dataPoints: [
-			{ x: new Date(2019, 10, 7), y: 610 },
-			{ x: new Date(2019, 10, 6), y: 680 },
-			{ x: new Date(2019, 10, 5), y: 690 },
-			{ x: new Date(2019, 10, 4), y: 700 },
-			{ x: new Date(2019, 10, 3), y: 710 },
-			{ x: new Date(2019, 10, 2), y: 658 }
-		]
-	}]
-});
-chart.render();
 
-requestCount();
-  
-  function requestCount(){
-      var settings = {
-          "async": true,
-          "crossDomain": true,
-          "url": "https://dive11.azurewebsites.net/api/beta/dashboard/getCounts",
-          "method": "GET",
-          "headers": {
-            "x-api-key": "q4jdp6swt4015amrj0681s0xs5r4opotc4f5sfv3",
-          }
+
+        requestCount();
+
+        function requestCount() {
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": "https://dive11.azurewebsites.net/api/beta/dashboard/getCounts",
+                "method": "GET",
+                "headers": {
+                    "x-api-key": "q4jdp6swt4015amrj0681s0xs5r4opotc4f5sfv3",
+                }
+            }
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+
+                if (response.status == 200) {
+
+                    data = response.result
+
+                    document.getElementById("text1").innerHTML = data.buCount
+                    document.getElementById("text2").innerHTML = data.appCount
+                    document.getElementById("text3").innerHTML = data.usersCount
+                    document.getElementById("text4").innerHTML = data.devicesCount
+
+
+                }
+
+            });
         }
-        
-        $.ajax(settings).done(function (response) {
-          console.log(response);
-          
-          if(response.status == 200){
 
-            data = response.result
+        buCount("A")
 
-            document.getElementById("text1").innerHTML = data.buCount
-            document.getElementById("text2").innerHTML = data.appCount
-            document.getElementById("text3").innerHTML = data.usersCount
-            document.getElementById("text4").innerHTML = data.devicesCount
+        function buCount() {
+            document.getElementById("chartContainer").innerHTML = '<div class="loading"><i class="fa fa-spin fa-cog"></i></div>';
+
+            var type = document.getElementById("changegraph").value
+
+            let url = null
+
+            if (type == "A") {
+
+                url = "https://dive11.azurewebsites.net/api/beta/businessunits/getWeekBuCounts"
+
+            } else {
+
+                url = "https://dive11.azurewebsites.net/api/beta/applications/getWeekAppCounts"
+            }
+
+            var today = new Date();
+
+            var date2 = today.getFullYear() + ', ' + (today.getMonth() + 1) + ', ' + (today.getDate() - 1);
+            var date3 = today.getFullYear() + ', ' + (today.getMonth() + 1) + ', ' + (today.getDate() - 2);
+            var date4 = today.getFullYear() + ', ' + (today.getMonth() + 1) + ', ' + (today.getDate() - 3);
+            var date5 = today.getFullYear() + ', ' + (today.getMonth() + 1) + ', ' + (today.getDate() - 4);
+            var date6 = today.getFullYear() + ', ' + (today.getMonth() + 1) + ', ' + (today.getDate() - 5);
+            var date7 = today.getFullYear() + ', ' + (today.getMonth() + 1) + ', ' + (today.getDate() - 6);
+            var date1 = today.getFullYear() + ', ' + (today.getMonth() + 1) + ', ' + today.getDate();
+
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": url,
+                "method": "GET"
+            }
+
+            $.ajax(settings).done(function (response) {
+
+                data = response.result[0].counts
+
+                console.log(data)
 
 
-          }
-          
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    animationEnabled: true,
+                    axisX: {
+                        valueFormatString: "DD MMM",
+                        title: "Days",
+                    },
+                    axisY: {
+                        title: "Number of Entities On boarded",
+                        includeZero: false
+                    },
+                    data: [{
+                        type: "line",
+                        xValueFormatString: "DD MMM",
+                        color: "#F08080",
+                        dataPoints: [
+                            { x: new Date(date1), y: data.today },
+                            { x: new Date(date2), y: data.two },
+                            { x: new Date(date3), y: data.three },
+                            { x: new Date(date4), y: data.four },
+                            { x: new Date(date5), y: data.five },
+                            { x: new Date(date6), y: data.six },
+                            { x: new Date(date7), y: data.seven }
+                        ]
+                    }]
+                });
+
+
+                chart.render();
+
+
+            });
+        }
+
+
+        $('#changegraph').on('change', function (e) {
+
+            document.getElementById("chartContainer").innerHTML = '<div class="loading"><i class="fa fa-spin fa-cog"></i></div>';
+
+            var type = document.getElementById("changegraph").value
+
+            let url = null
+
+            if (type == "A") {
+
+                url = "https://dive11.azurewebsites.net/api/beta/businessunits/getWeekBuCounts"
+
+            } else {
+
+                url = "https://dive11.azurewebsites.net/api/beta/applications/getWeekAppCounts"
+            }
+
+            var today = new Date();
+
+            var date2 = today.getFullYear() + ', ' + (today.getMonth() + 1) + ', ' + (today.getDate() - 1);
+            var date3 = today.getFullYear() + ', ' + (today.getMonth() + 1) + ', ' + (today.getDate() - 2);
+            var date4 = today.getFullYear() + ', ' + (today.getMonth() + 1) + ', ' + (today.getDate() - 3);
+            var date5 = today.getFullYear() + ', ' + (today.getMonth() + 1) + ', ' + (today.getDate() - 4);
+            var date6 = today.getFullYear() + ', ' + (today.getMonth() + 1) + ', ' + (today.getDate() - 5);
+            var date7 = today.getFullYear() + ', ' + (today.getMonth() + 1) + ', ' + (today.getDate() - 6);
+            var date1 = today.getFullYear() + ', ' + (today.getMonth() + 1) + ', ' + today.getDate();
+
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": url,
+                "method": "GET"
+            }
+
+            $.ajax(settings).done(function (response) {
+
+                data = response.result[0].counts
+
+                console.log(data)
+
+
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    animationEnabled: true,
+                    axisX: {
+                        valueFormatString: "DD MMM",
+                        title: "Days",
+                    },
+                    axisY: {
+                        title: "Number of Entities On boarded",
+                        includeZero: false
+                    },
+                    data: [{
+                        type: "line",
+                        xValueFormatString: "DD MMM",
+                        color: "#F08080",
+                        dataPoints: [
+                            { x: new Date(date1), y: data.today },
+                            { x: new Date(date2), y: data.two },
+                            { x: new Date(date3), y: data.three },
+                            { x: new Date(date4), y: data.four },
+                            { x: new Date(date5), y: data.five },
+                            { x: new Date(date6), y: data.six },
+                            { x: new Date(date7), y: data.seven }
+                        ]
+                    }]
+                });
+
+
+                chart.render();
+
+
+            });
+
+
         });
-  }
 
-}
+    }
 </script>
 
 <%- include('footer'); -%>

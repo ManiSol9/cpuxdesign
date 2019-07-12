@@ -11,7 +11,7 @@ $(document).ready(function () {
     let newApp = []
     let newUser = []
     let newDevice = []
-
+    let groups = []
     function fetchAssosiation() {
 
         var settings = {
@@ -30,7 +30,7 @@ $(document).ready(function () {
         $.ajax(settings).done(function (response) {
             console.log(response, "bus");
 
-            
+
             business_units = response.result
 
             console.log(business_units)
@@ -92,19 +92,196 @@ $(document).ready(function () {
                     apps[j].children = data
                 }
 
-            }
+            } */
 
-            console.log(business_units) */
+            console.log(business_units)
 
-            makeList('result', business_units);
+            //makeList('result', business_units);
 
-            document.getElementById("hideDiv").style.display = "none"
-            document.getElementById("showDiv").style.display = "block"
+            includeData(business_units)
+
+
 
 
         });
 
     }
+
+    function includeData(data) {
+
+        for (i = 0; i < data.length; i++) {
+
+            if (business_units[i].children == undefined) {
+
+                continue;
+
+            } else {
+
+                let apps = business_units[i].children
+
+                for (j = 0; j < apps.length; j++) {
+
+                    if (apps[j].children == undefined) {
+
+                        continue;
+
+                    } else {
+
+                        groups = apps[j].children
+
+                        let children = []
+
+                        for (k = 0; k < groups.length; k++) {
+
+                            let type = null
+                            let id = null
+
+                            type = groups[k].node_type
+                            id = groups[k].id
+
+                            let url = null
+
+                            if (type == "User Group") {
+
+                                url = "https://dive11.azurewebsites.net/api/beta/users/getUsersByUserGroupID?userGroupID=" + groups[k].node_orig_id
+
+                            } else {
+
+                                url = "https://dive11.azurewebsites.net/api/beta/devices/getDevicesByDeviceGroupID?deviceGroupID=" + groups[k].node_orig_id
+
+                            }
+
+                            children = groups[k].children
+
+
+                            var settings = {
+                                "async": true,
+                                "crossDomain": true,
+                                "url": url,
+                                "method": "GET",
+                                "headers": {
+                                    "content-type": "application/json",
+                                    "cache-control": "no-cache",
+                                    "postman-token": "0146efcb-e86f-0ff0-d4ea-d8647cbbfd33"
+                                },
+                                "processData": false
+                            }
+
+                            $.ajax(settings).done(function (response) {
+
+                                result = response.result;
+
+                                child = []
+                                
+                                for(x in result){
+
+                                    if(type == "User Group"){
+
+                                        let myObj = {
+                                            id: 0,
+                                            node: result[x].firstname,
+                                            node_orig_id: 1,
+                                            node_path: null,
+                                            node_type: "Users",
+                                            parent_id: null,
+                                            parent_node: null
+                                        }
+
+                                        child.push(myObj)
+
+
+                                    } else {
+
+                                        let myObj = {
+                                            id: 0,
+                                            node: result[x].device_name,
+                                            node_orig_id: 1,
+                                            node_path: null,
+                                            node_type: "Devices",
+                                            parent_id: null,
+                                            parent_node: null
+                                        }
+
+                                        child.push(myObj)
+                                    }
+
+                                }
+
+                                sendData(child, data, id)
+
+
+                            });
+
+
+                            
+                        }
+                    }
+
+                }
+
+            }
+
+
+        }
+
+
+    }
+
+    function sendData(x, data, y){
+
+        for (i = 0; i < data.length; i++) {
+
+            if (business_units[i].children == undefined) {
+
+                continue;
+
+            } else {
+
+                let apps = business_units[i].children
+
+                for (j = 0; j < apps.length; j++) {
+
+                    if (apps[j].children == undefined) {
+
+                        continue;
+
+                    } else {
+
+                        groups = apps[j].children
+
+
+                        for (k = 0; k < groups.length; k++) {
+
+                            if(groups[k].id == y){
+
+                                groups[k].children = x
+                            }
+
+                        }
+                        
+                    }
+
+                }
+
+            }
+
+
+        }
+
+    }
+
+    setTimeout(function(){
+        
+        
+        makeList('result', business_units); 
+    
+    
+        document.getElementById("hideDiv").style.display = "none"
+        document.getElementById("showDiv").style.display = "block"
+    
+    }, 9000);
+
+    /*
 
     fetchApps();
 
@@ -218,6 +395,8 @@ $(document).ready(function () {
 
     }
 
+    */
+
 
 
 
@@ -292,38 +471,10 @@ $(document).ready(function () {
     })
         .on('change', updateOutput);
 
-    $('#nestable3').nestable({
-        group: 0, maxDepth: 5
-    })
-        .on('change', function (e) {
+    //$('#nestable3').nestable({'serialize'});
 
-            /*
+    $('#nestable3').nestable('serialize');
 
-            var list = e.length ? e : $(e.target)
-            var leftentities = list.nestable('serialize');
-
-            console.log(leftentities)
-
-            for (i = 0; i < leftentities.length; i++) {
-
-                bu_entity = leftentities[i]
-
-                console.log(bu_entity)
-
-                if (bu_entity.value == 'B') {
-
-                    console.log(bu_entity, 'bu entity')
-
-                } else {
-
-                    //alert('wrong move')
-
-                }
-            }
-
-            */
-
-        });
 
     // activate Nestable for list 2
     $('#nestable4').nestable({
@@ -355,7 +506,7 @@ $(document).ready(function () {
 
         var type = document.getElementById("entitytype").value;
 
-        if(type == "D"){
+        if (type == "D") {
             updateAssosiation(newDevice)
         } else {
             updateAssosiation(newUser)
@@ -402,15 +553,18 @@ $(document).ready(function () {
         domName[0].appendChild(dd);
     }
 
+    let z = 0;
+
     function createOlLi(lists, index) {
         if (lists.length) {
             var ol = document.createElement("ol");
             ol.className = "dd-list";
             ol.setAttribute("id", 'Indivi_item_scroll');
             for (let i = 0; i < lists.length; i++) {
+                z++
                 var li = document.createElement("li");
                 li.className = "dd-item";
-                li.id = "dd-item-"+lists[i].node_orig_id
+                li.id = "dd-item-" + lists[i].node_orig_id
                 li.setAttribute("data-name", lists[i].node);
                 li.setAttribute("data-id", lists[i].node_orig_id);
 
@@ -420,15 +574,29 @@ $(document).ready(function () {
                     type = 1
                 } else if (lists[i].node_type == "Application") {
                     type = 2
-                } else {
+                } else if(lists[i].node_type == "Device Group") {
                     type = 3
+                } else {
+                    type = 4
                 }
 
                 li.setAttribute("data-value", type);
 
                 let j = 0;
 
+                var button1 = document.createElement("button");
+                button1.setAttribute("data-action", "expand");
+                button1.className = "expand";
+                button1.innerHTML = "Expand";
+                button1.style.display = "none"
 
+                var button2 = document.createElement("button");
+                button2.setAttribute("data-action", "collapse");
+                button2.className = "collapse";
+                button2.innerHTML = "Collapse";
+
+                li.appendChild(button1)
+                li.appendChild(button2)
 
                 var div = document.createElement("div");
                 div.className = "dd-handle";
@@ -436,6 +604,8 @@ $(document).ready(function () {
                 //div.innerHTML = lists[i].id;
 
                 li.appendChild(div);
+                li.innerHTML +="<i onclick='mani("+z+", "+type+")' id='manibtn"+z+"' class='fa fa-ellipsis-v ellip_Icon_Align'></i> "
+                //li.innerHTML += '<a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="">Dismissible popover</a>'
                 //li.innerHTML += "<i class='fa fa-ellipsis-v ellip_Icon_Align' onclick='rgtPullOver(" + lists[i].node_orig_id + ", " + type + ", \"" + lists[i].node + "\")'></i><i class='fa fa-trash-o fa-lg ellip_Icon_Align' onclick='mani(" + i + ")' id='delete'></i> ";
                 if (lists[i].children) {
                     li.appendChild(createOlLi(lists[i].children, i + index + 1));
@@ -452,11 +622,43 @@ $(document).ready(function () {
         }
     }
 
-    mani = (value) => {
-        source_Array.splice(value, 1)
-        console.log(source_Array)
-        localStorage.setItem('source', JSON.stringify(source_Array));
-        makeList('dd-source', source_Array);
+
+    mani = (value, type) => {
+
+        var divID = '#manibtn'+value;
+
+        $(divID).popover({
+            container: "body",
+            html: true,
+            content: function () {
+                return '<div class="popover-message"><div><i onclick="route('+type+')" class="fa fa-plus"></i></div><div><i class="fa fa-edit"></i></div><div><i class="fa fa-trash-o"></i></div></div>';
+            }
+        });
+
+    }
+
+    route = (type) => {
+        if(type == 1){
+
+            window.location.href = "http://localhost:3000/businessunits";
+
+
+        } else if(type == 2){
+
+            window.location.href = "http://localhost:3000/application";
+
+
+        } else if(type == 3) {
+
+            window.location.href = "http://localhost:3000/devices";
+
+
+        } else {
+
+            window.location.href = "http://localhost:3000/users";
+
+        }
+
     }
 
     fetchUsers = () => {
@@ -591,7 +793,7 @@ $(document).ready(function () {
         data.children = checkedDevices
 
         newDevice = data
-        
+
     }
 
     updateData = (x) => {
@@ -630,7 +832,7 @@ $(document).ready(function () {
         console.log(window.scrollY);
 
         var position = $('#dd-item-18').position();
-        console.log('X: ' + position.left + ", Y: " + position.top );
+        console.log('X: ' + position.left + ", Y: " + position.top);
 
         if (type == 1) {
 
